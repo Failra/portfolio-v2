@@ -9,25 +9,28 @@
 
 :root {
     /* Brand colors */
-    --color-primary: #4a7a6e;       /* deep teal-green: headers, nav, links */
-    --color-primary-dark: #35594f;  /* darker teal: hover/active states */
-    --color-accent: #e0a66a;        /* warm orange: cards, highlights */
-    --color-accent-dark: #c98a49;   /* darker orange: hover states */
+    --color-primary: #2f5d52;       /* deep teal-green: headers, nav, links */
+    --color-primary-dark: #24463e;  /* darker teal: hover/active states */
+    --color-accent: #e0a66a;        /* warm amber: highlights, underlines */
+    --color-accent-dark: #c98a49;   /* darker amber: hover states */
 
     /* Text */
-    --color-text: #2d2420;          /* main body text */
-    --color-text-muted: #4d3a2c;    /* secondary text, links on light bg */
+    --color-text: #2d2a26;          /* main body text */
+    --color-text-muted: #6b6259;    /* secondary text, card descriptions */
     --color-text-on-dark: #ffffff;  /* text placed over photos/dark overlays */
 
     /* Backgrounds */
-    --color-bg-page: #f4f4f4;       /* page background on activity/project pages */
+    --color-bg-page: #faf7f2;       /* warm off-white page background */
     --color-bg-card: #ffffff;       /* white card/container background */
-    --color-bg-overlay: rgba(74, 122, 110, 0.5); /* translucent header/hero overlay */
+    --color-bg-overlay: rgba(24, 44, 39, 0.55); /* translucent dark-teal overlay */
 
     /* Typography */
-    --font-body: Arial, Helvetica, sans-serif;
+    --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-heading: Georgia, "Times New Roman", serif;
 
-    /* Shape */
-    --radius: 10px;
+    /* Shape and depth */
+    --radius: 14px;
     --container-max: 800px;
+    --shadow: 0 2px 10px rgba(31, 41, 38, 0.08);
+    --shadow-hover: 0 12px 28px rgba(31, 41, 38, 0.18);
 }
