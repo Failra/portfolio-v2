@@ -167,8 +167,10 @@ When the student asks to add a new activity or project:
 6. Open `index.html`.
 
    Add one new `<article class="project-card">` inside
-   `<section class="portfolio">`, following the exact pattern of the existing
-   cards.
+   `<div class="portfolio-grid">` (within `<section class="portfolio">`),
+   following the exact pattern of the existing cards: the image first, then
+   the `.project-info` overlay holding the title, the arrow badge, and the
+   one-line description.
 
    Include:
 

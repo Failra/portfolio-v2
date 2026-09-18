@@ -7,27 +7,43 @@
 /* don't hardcode new colors directly in index.css/project.css.  */
 /* ============================================================ */
 
+/* Web fonts (loaded from Google Fonts). If they fail to load, the */
+/* system fallbacks listed in --font-body / --font-heading kick in. */
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap");
+
 :root {
     /* Brand colors */
-    --color-primary: #4a7a6e;       /* deep teal-green: headers, nav, links */
-    --color-primary-dark: #35594f;  /* darker teal: hover/active states */
-    --color-accent: #e0a66a;        /* warm orange: cards, highlights */
+    --color-primary: #3f7266;       /* deep teal-green: headers, nav, links */
+    --color-primary-dark: #1d3a34;  /* darkest teal: hero overlay, footer, dark text */
+    --color-accent: #e8a85f;        /* warm sunflower orange: highlights, buttons */
     --color-accent-dark: #c98a49;   /* darker orange: hover states */
 
     /* Text */
-    --color-text: #2d2420;          /* main body text */
-    --color-text-muted: #4d3a2c;    /* secondary text, links on light bg */
+    --color-text: #23302d;          /* main body text */
+    --color-text-muted: #5d6d69;    /* secondary text, captions */
     --color-text-on-dark: #ffffff;  /* text placed over photos/dark overlays */
 
     /* Backgrounds */
-    --color-bg-page: #f4f4f4;       /* page background on activity/project pages */
+    --color-bg-page: #f5f2ec;       /* warm off-white page background */
     --color-bg-card: #ffffff;       /* white card/container background */
-    --color-bg-overlay: rgba(74, 122, 110, 0.5); /* translucent header/hero overlay */
+    --color-bg-overlay: rgba(29, 58, 52, 0.55);   /* translucent dark-teal overlay */
+    --color-glass: rgba(255, 255, 255, 0.14);      /* frosted glass on dark photos */
+    --color-glass-dark: rgba(29, 58, 52, 0.72);    /* dark frosted glass (home nav bar) */
+    --color-glass-border: rgba(255, 255, 255, 0.28);
+    --color-glass-light: rgba(255, 255, 255, 0.78); /* frosted glass on light pages */
 
     /* Typography */
-    --font-body: Arial, Helvetica, sans-serif;
+    --font-body: "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --font-heading: "Space Grotesk", "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
 
-    /* Shape */
-    --radius: 10px;
-    --container-max: 800px;
+    /* Shape and depth */
+    --radius: 18px;
+    --radius-sm: 12px;
+    --radius-pill: 999px;
+    --shadow: 0 10px 30px rgba(29, 58, 52, 0.12);
+    --shadow-lg: 0 24px 50px rgba(29, 58, 52, 0.22);
+    --container-max: 860px;
+
+    /* Motion */
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }

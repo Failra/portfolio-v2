@@ -2,46 +2,85 @@
 
 body {
     background-color: var(--color-bg-page);
+    /* Soft teal wash at the top of the page, fading into the warm background */
+    background-image: linear-gradient(to bottom, rgba(63, 114, 102, 0.16), transparent 420px);
+    color: var(--color-text);
     font-family: var(--font-body);
-    margin: 20px;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
 }
 
 /* **************************** */
 /* Style for the header section */
 /* **************************** */
 
+/* Floating "glass pill" navigation bar (light version for detail pages) */
 .header {
     position: fixed;
-    top: 20px;
+    top: 18px;
     left: 50%;
     transform: translateX(-50%);
-    width: 75%;
-    max-width: var(--container-max);
-    background: rgba(250, 250, 250, 0.9);
+    width: min(92%, var(--container-max));
     z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 8px;
-    color: var(--color-primary);
-    border-radius: var(--radius);
+    color: var(--color-primary-dark);
+    background: var(--color-glass-light);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: var(--radius-pill);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: var(--shadow);
 }
 
 .header .name {
-    text-align: left;
-    font-size: 1.5em;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.15em;
+    padding-left: 12px;
+    text-decoration: none;
+    color: inherit;
 }
 
 .header .navbar {
     display: flex;
-    gap: 15px;
-    font-size: 1.5em;
+    gap: 4px;
+    font-size: 0.95em;
+    font-weight: 500;
 }
 
 .header .navbar a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     text-decoration: none;
-    color: var(--color-primary);
-    padding: 10px;
+    color: var(--color-primary-dark);
+    padding: 10px 18px;
+    border-radius: var(--radius-pill);
+    transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+}
+
+/* Small "back" arrow drawn in CSS before the Home link */
+.header .navbar a::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-left: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.25s var(--ease-out);
+}
+
+.header .navbar a:hover,
+.header .navbar a.active {
+    background: var(--color-primary-dark);
+    color: var(--color-text-on-dark);
+}
+
+.header .navbar a:hover::before {
+    transform: rotate(45deg) translate(-2px, 2px);
 }
 
 /* *********************************** */
@@ -50,32 +89,67 @@ body {
 
 .proj-container {
     max-width: var(--container-max);
-    margin: auto;
-    margin-top: 90px;
+    margin: 110px auto 60px;
     background: var(--color-bg-card);
-    padding: 20px;
+    padding: 28px;
     border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    animation: rise-in 0.8s var(--ease-out) both;
 }
 
-.proj-header {
-    text-align: center;
+/* First heading on the page ("Project Portfolio") becomes a small label */
+h1.proj-header {
+    margin: 0 0 14px;
+    font-size: 0.8em;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
     color: var(--color-primary);
+    text-align: left;
+}
+
+h1.proj-header::before {
+    content: "";
+    display: inline-block;
+    width: 22px;
+    height: 3px;
+    margin-right: 10px;
+    vertical-align: middle;
+    border-radius: 2px;
+    background: var(--color-accent);
+}
+
+/* Main title of the activity/project */
+h2.proj-header {
+    margin: 26px 0 8px;
+    font-family: var(--font-heading);
+    font-size: clamp(1.7rem, 4vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--color-primary-dark);
+    text-align: left;
 }
 
 .proj-img-container {
-    text-align: center;
-    margin: 20px 0;
+    margin: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--color-bg-page);
+    box-shadow: var(--shadow);
 }
 
 .proj-img-container img {
-    max-width: 100%;
-    height: auto;
-    border-radius: var(--radius);
+    display: block;
+    width: 100%;
+    max-height: 520px;
+    object-fit: cover;
 }
 
 .proj-desc {
-    margin: 20px 0;
-    line-height: 1.6;
+    margin: 16px 0 0;
+    font-size: 1.05em;
+    line-height: 1.75;
 }
 
 .proj-desc p {
@@ -85,15 +159,24 @@ body {
 /* Optional block: a labeled code sample. Delete this block on pages   */
 /* that don't involve code (e.g. a build or design activity).          */
 .proj-code {
-    max-width: 700px;
-    margin: auto;
+    margin: 28px 0 0;
+}
+
+.proj-code h3 {
+    margin: 0 0 10px;
+    font-family: var(--font-heading);
+    font-size: 1em;
+    color: var(--color-primary);
 }
 
 .proj-code pre:has(code), pre:has(code) {
-    background-color: black;
-    color: white;
-    border-radius: 8px;
-    padding: 4px;
+    background-color: var(--color-primary-dark);
+    color: var(--color-text-on-dark);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    font-size: 0.92em;
+    line-height: 1.6;
+    overflow-x: auto;
 }
 pre code, pre code {
     white-space: pre-wrap;
@@ -104,16 +187,22 @@ pre code, pre code {
 /* work-in-progress or detail photos beyond the one hero image.       */
 .proj-gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
-    margin: 20px 0;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin: 28px 0 0;
 }
 
 .proj-gallery img {
     width: 100%;
-    height: 150px;
+    height: 170px;
     object-fit: cover;
-    border-radius: var(--radius);
+    border-radius: var(--radius-sm);
+    transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+}
+
+.proj-gallery img:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--shadow-lg);
 }
 
 /* Optional block: an embedded video (e.g. YouTube). The padding-top  */
@@ -123,9 +212,10 @@ pre code, pre code {
     position: relative;
     width: 100%;
     padding-top: 56.25%;
-    margin: 20px 0;
-    border-radius: var(--radius);
+    margin: 28px 0 0;
+    border-radius: var(--radius-sm);
     overflow: hidden;
+    box-shadow: var(--shadow);
 }
 
 .proj-video-container iframe {
@@ -137,35 +227,55 @@ pre code, pre code {
     border: 0;
 }
 
+@keyframes rise-in {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .proj-container {
+        animation: none;
+    }
+}
+
 /* ***************************** */
 /* Responsive: tablet and mobile */
 /* ***************************** */
 
 @media (max-width: 600px) {
     .header {
-        width: 92%;
+        top: 12px;
+        width: 94%;
         padding: 6px;
     }
 
     .header .name {
-        font-size: 1.1em;
+        font-size: 1em;
     }
 
     .header .navbar {
-        font-size: 1.1em;
-        gap: 8px;
+        font-size: 0.9em;
+    }
+
+    .header .navbar a {
+        padding: 8px 14px;
     }
 
     .proj-container {
-        margin-top: 80px;
-        padding: 14px;
+        margin: 90px 12px 40px;
+        padding: 16px;
+        border-radius: var(--radius-sm);
     }
 
-    .proj-header {
-        font-size: 1.3em;
+    .proj-img-container {
+        border-radius: var(--radius-sm);
+    }
+
+    .proj-img-container img {
+        max-height: 320px;
     }
 
     .proj-gallery img {
-        height: 120px;
+        height: 130px;
     }
 }
