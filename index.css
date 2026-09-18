@@ -1,5 +1,11 @@
 @import url("./theme.css");
 
+/* Smooth cross-fade when moving between pages (browsers that support */
+/* cross-document view transitions; others just load the page).       */
+@view-transition {
+    navigation: auto;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -38,6 +44,22 @@ body {
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     box-shadow: var(--shadow);
+    overflow: hidden;
+    view-transition-name: site-header;
+}
+
+/* Thin orange reading-progress line along the bottom of the bar. */
+/* It grows as you scroll (scroll-driven animation, no JavaScript). */
+.header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
 }
 
 .header .name {
@@ -76,30 +98,40 @@ body {
 
 .home {
     position: relative;
+    isolation: isolate;
+    box-sizing: border-box;   /* padding counts toward the 100vh, so the hero is exactly one screen tall */
     min-height: 100vh;
     min-height: 100svh;
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
     align-items: center;
+    gap: 3rem;
     padding: 7rem 8% 6rem;
     color: var(--color-text-on-dark);
     overflow: hidden;
-    /* Dark-teal gradient fading over the hero photo keeps the text readable */
-    background:
-        linear-gradient(100deg, rgba(29, 58, 52, 0.92) 0%, rgba(29, 58, 52, 0.7) 45%, rgba(29, 58, 52, 0.25) 100%),
-        url("./images/header.jpg") center / cover no-repeat;
+    background: var(--color-primary-dark);
 }
 
-/* Faint blueprint grid over the photo */
+/* Layer 1: the hero photo. Slightly taller than the section so it can */
+/* drift upward (parallax) as the page scrolls.                         */
 .home::before {
     content: "";
     position: absolute;
+    inset: -12% 0 -12% 0;
+    z-index: -2;
+    background: url("./images/header.jpg") center / cover no-repeat;
+}
+
+/* Layer 2: dark-teal gradient plus a faint blueprint grid, so text reads */
+.home::after {
+    content: "";
+    position: absolute;
     inset: 0;
-    background-image:
-        linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-    background-size: 32px 32px;
-    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 85%);
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 85%);
+    z-index: -1;
+    background:
+        linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px) 0 0 / 32px 32px,
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px) 0 0 / 32px 32px,
+        linear-gradient(100deg, rgba(29, 58, 52, 0.92) 0%, rgba(29, 58, 52, 0.7) 45%, rgba(29, 58, 52, 0.3) 100%);
     pointer-events: none;
 }
 
@@ -114,9 +146,10 @@ body {
     align-items: center;
     gap: 10px;
     padding: 6px 14px 6px 8px;
-    font-size: 0.85em;
+    font-family: var(--font-mono);
+    font-size: 0.78em;
     font-weight: 500;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     background: var(--color-glass);
     border: 1px solid var(--color-glass-border);
@@ -132,6 +165,7 @@ body {
     border-radius: 50%;
     background: var(--color-accent);
     box-shadow: 0 0 0 4px rgba(232, 168, 95, 0.3);
+    animation: pulse 2.4s ease-in-out infinite;
 }
 
 .home-content h1 {
@@ -144,8 +178,15 @@ body {
     text-wrap: balance;
 }
 
+/* The name gets a slowly shimmering orange-to-cream gradient */
 .home-content h1 .accent {
     color: var(--color-accent);
+    background: linear-gradient(100deg, var(--color-accent) 0%, #ffe3bd 45%, var(--color-accent) 60%, var(--color-accent) 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 6s linear infinite;
 }
 
 .home-content p {
@@ -164,6 +205,7 @@ body {
 }
 
 .cta-button {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -173,8 +215,23 @@ body {
     background: var(--color-accent);
     border-radius: var(--radius-pill);
     text-decoration: none;
+    overflow: hidden;
     box-shadow: 0 10px 24px rgba(232, 168, 95, 0.35);
-    transition: transform 0.3s var(--ease-out), background-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+    transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+}
+
+/* Light sweep across the button on hover */
+.cta-button::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.55) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s var(--ease-out);
+}
+
+.cta-button:hover::after {
+    transform: translateX(100%);
 }
 
 .cta-button svg {
@@ -189,7 +246,6 @@ body {
 }
 
 .cta-button:hover {
-    background: var(--color-text-on-dark);
     transform: translateY(-2px);
     box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
 }
@@ -232,6 +288,65 @@ body {
     fill: currentColor;
 }
 
+/* ---- Engineering-drawing "title block" in the corner of the hero ---- */
+.title-block {
+    justify-self: end;
+    align-self: end;
+    position: relative;
+    width: min(100%, 360px);
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.78em;
+    background: var(--color-glass);
+    border: 1px solid var(--color-glass-border);
+    border-radius: var(--radius-sm);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+/* Registration cross in the top-right corner, like a real drawing sheet */
+.title-block::before,
+.title-block::after {
+    content: "";
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: var(--color-accent);
+    opacity: 0.9;
+}
+
+.title-block::before { width: 14px; height: 1px; transform: translate(0, 6px); }
+.title-block::after  { width: 1px; height: 14px; transform: translate(-6px, 0); }
+
+.title-block div {
+    display: grid;
+    grid-template-columns: 78px 1fr;
+    border-top: 1px solid var(--color-glass-border);
+}
+
+.title-block div:first-child {
+    border-top: 0;
+}
+
+.title-block dt,
+.title-block dd {
+    margin: 0;
+    padding: 10px 12px;
+}
+
+.title-block dt {
+    color: var(--color-accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-right: 1px solid var(--color-glass-border);
+}
+
+.title-block dd {
+    color: rgba(255, 255, 255, 0.95);
+    padding-right: 36px;
+}
+
 /* Bouncing "scroll down" hint at the bottom of the hero */
 .scroll-cue {
     position: absolute;
@@ -243,7 +358,8 @@ body {
     align-items: center;
     gap: 8px;
     color: rgba(255, 255, 255, 0.75);
-    font-size: 0.75em;
+    font-family: var(--font-mono);
+    font-size: 0.7em;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     text-decoration: none;
@@ -267,24 +383,60 @@ body {
 .home-content > :nth-child(3) { animation-delay: 0.32s; }
 .home-content > :nth-child(4) { animation-delay: 0.46s; }
 
+.title-block {
+    animation: rise-in 0.9s var(--ease-out) 0.6s both;
+}
+
 .scroll-cue {
     animation: fade-in 1s var(--ease-out) 1s both;
 }
 
-@keyframes rise-in {
-    from { opacity: 0; transform: translateY(26px); }
-    to   { opacity: 1; transform: translateY(0); }
+/* ***************************** */
+/* Scrolling keyword ticker      */
+/* ***************************** */
+
+.ticker {
+    overflow: hidden;
+    background: var(--color-primary-dark);
+    color: var(--color-accent);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: var(--font-mono);
+    font-size: 0.8em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
 }
 
-@keyframes fade-in {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+/* The keyword list is written twice in the HTML; sliding the track by  */
+/* exactly half its width makes the loop seamless.                       */
+.ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker 38s linear infinite;
 }
 
-@keyframes cue-drop {
-    0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
-    40%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
-    100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+.ticker:hover .ticker-track {
+    animation-play-state: paused;
+}
+
+.ticker-track span {
+    padding: 14px 0;
+    white-space: nowrap;
+}
+
+/* Small orange diamond between keywords */
+.ticker-track span::after {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin: 0 28px;
+    vertical-align: middle;
+    background: var(--color-accent);
+    transform: rotate(45deg);
+    opacity: 0.8;
 }
 
 /* ************************************* */
@@ -312,13 +464,16 @@ body {
     font-weight: 700;
     letter-spacing: -0.02em;
     margin: 0;
-    color: var(--color-primary-dark);
+    color: var(--color-heading);
 }
 
 .portfolio-intro p {
     margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.8em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--color-text-muted);
-    font-weight: 500;
 }
 
 /* 12-column grid. Cards alternate between wide (7) and narrow (5) */
@@ -327,6 +482,7 @@ body {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     gap: 1.25rem;
+    counter-reset: sheet;   /* cards number themselves: 01, 02, 03 ... */
 }
 
 .project-card {
@@ -350,7 +506,57 @@ body {
     box-shadow: var(--shadow-lg);
 }
 
+/* Sheet number chip (top-left), generated automatically from the card's */
+/* position in the grid — nothing to type when adding a new card.        */
+.project-card::before {
+    counter-increment: sheet;
+    content: counter(sheet, decimal-leading-zero);
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 2;
+    padding: 6px 10px;
+    font-family: var(--font-mono);
+    font-size: 0.78em;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--color-text-on-dark);
+    background: var(--color-glass-dark);
+    border: 1px solid var(--color-glass-border);
+    border-radius: var(--radius-pill);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    pointer-events: none;
+}
+
+/* Type chip (top-right): reads the link target to decide the label. */
+.project-link::before {
+    content: "Project";
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    padding: 6px 10px;
+    font-family: var(--font-mono);
+    font-size: 0.72em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-primary-dark);
+    background: var(--color-accent);
+    border-radius: var(--radius-pill);
+}
+
+.project-link[href*="activity"]::before {
+    content: "Activity";
+    color: var(--color-text-on-dark);
+    background: var(--color-glass-dark);
+    border: 1px solid var(--color-glass-border);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
 .project-link {
+    position: relative;
     display: block;
     color: inherit;
     text-decoration: none;
@@ -381,6 +587,24 @@ body {
     padding: 18px;
     background: linear-gradient(to top, rgba(29, 58, 52, 0.92) 0%, rgba(29, 58, 52, 0.55) 40%, transparent 70%);
     color: var(--color-text-on-dark);
+}
+
+/* Orange "dimension line" that draws across the bottom edge on hover */
+.project-info::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s var(--ease-out);
+}
+
+.project-card:hover .project-info::after {
+    transform: scaleX(1);
 }
 
 .project-info-row {
@@ -443,15 +667,14 @@ body {
     transform: rotate(45deg);
 }
 
-/* Cards fade up as they scroll into view (browsers that support */
-/* scroll-driven animations; others simply show the cards).       */
-@supports (animation-timeline: view()) {
-    .project-card {
-        animation: rise-in 0.8s var(--ease-out) both;
-        animation-timeline: view();
-        animation-range: entry 0% entry 35%;
-    }
-}
+/* ---- Page-to-page morph: each card image flies into the matching ---- */
+/* ---- detail page's hero image (project.css names them the same). ---- */
+.project-img[src$="activity01.png"] { view-transition-name: hero-activity01; }
+.project-img[src$="activity02.png"] { view-transition-name: hero-activity02; }
+.project-img[src$="activity03.png"] { view-transition-name: hero-activity03; }
+.project-img[src$="project01.png"]  { view-transition-name: hero-project01; }
+.project-img[src$="project02.png"]  { view-transition-name: hero-project02; }
+.project-img[src$="project03.png"]  { view-transition-name: hero-project03; }
 
 /* ****************** */
 /* Footer             */
@@ -468,6 +691,90 @@ body {
     margin: 0;
 }
 
+/* ****************** */
+/* Keyframes          */
+/* ****************** */
+
+@keyframes rise-in {
+    from { opacity: 0; transform: translateY(26px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes cue-drop {
+    0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
+    40%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+    100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(232, 168, 95, 0.3); }
+    50%      { box-shadow: 0 0 0 8px rgba(232, 168, 95, 0.12); }
+}
+
+@keyframes shimmer {
+    from { background-position: 120% 0; }
+    to   { background-position: -120% 0; }
+}
+
+@keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+@keyframes grow-x {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+}
+
+@keyframes hero-parallax {
+    from { transform: translateY(-6%); }
+    to   { transform: translateY(6%); }
+}
+
+@keyframes hero-fade {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(-40px); }
+}
+
+/* ---- Scroll-driven effects (browsers that support them; the rest ---- */
+/* ---- simply show everything in its final state).                  ---- */
+@supports (animation-timeline: scroll()) {
+    /* Reading-progress line in the nav bar */
+    .header::after {
+        animation: grow-x linear both;
+        animation-timeline: scroll(root);
+    }
+
+    /* Hero photo drifts and the hero text fades as you scroll away */
+    .home::before {
+        animation: hero-parallax linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 100vh;
+    }
+
+    .home-content,
+    .title-block {
+        animation-name: rise-in, hero-fade;
+        animation-duration: 0.9s, 1s;
+        animation-timing-function: var(--ease-out), linear;
+        animation-fill-mode: both, both;
+        animation-timeline: auto, scroll(root);
+        animation-range: normal, 10vh 75vh;
+    }
+
+    /* Cards fade up as they enter the viewport */
+    .project-card {
+        animation: rise-in 0.8s var(--ease-out) both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 35%;
+    }
+}
+
 /* ***************************** */
 /* Accessibility: reduced motion */
 /* ***************************** */
@@ -477,17 +784,40 @@ body {
         scroll-behavior: auto;
     }
 
+    .home-content,
     .home-content > *,
+    .home::before,
+    .title-block,
     .scroll-cue,
     .scroll-cue span,
+    .eyebrow::before,
+    .home-content h1 .accent,
+    .ticker-track,
     .project-card {
         animation: none;
+    }
+
+    .header::after {
+        display: none;
     }
 }
 
 /* ***************************** */
 /* Responsive: tablet and mobile */
 /* ***************************** */
+
+@media (max-width: 1000px) {
+    .home {
+        grid-template-columns: 1fr;
+        align-items: center;
+        gap: 2.5rem;
+    }
+
+    .title-block {
+        justify-self: start;
+        width: min(100%, 420px);
+    }
+}
 
 @media (max-width: 900px) {
     .project-card,
@@ -521,7 +851,8 @@ body {
     }
 
     .home {
-        padding: 8rem 6% 6rem;
+        padding: 7rem 6% 6rem;
+        gap: 2rem;
     }
 
     .home-content p {
@@ -532,6 +863,22 @@ body {
     .social-link {
         padding: 11px 16px;
         font-size: 0.95em;
+    }
+
+    .title-block {
+        font-size: 0.72em;
+    }
+
+    .title-block div {
+        grid-template-columns: 68px 1fr;
+    }
+
+    .scroll-cue {
+        display: none;
+    }
+
+    .ticker {
+        font-size: 0.72em;
     }
 
     .portfolio {
