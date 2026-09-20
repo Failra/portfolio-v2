@@ -277,9 +277,9 @@ pre code, pre code {
 /* ---- on the home page, so it flies between the two on navigation.    ---- */
 .proj-img-container img[src$="activity01.png"] { view-transition-name: hero-activity01; }
 .proj-img-container img[src$="activity02.png"] { view-transition-name: hero-activity02; }
-.proj-img-container img[src$="activity03.png"] { view-transition-name: hero-activity03; }
-.proj-img-container img[src$="project01.png"]  { view-transition-name: hero-project01; }
-.proj-img-container img[src$="project02.png"]  { view-transition-name: hero-project02; }
+.proj-img-container img[src$="activity03.jpg"] { view-transition-name: hero-activity03; }
+.proj-img-container img[src$="project01.jpg"]  { view-transition-name: hero-project01; }
+.proj-img-container img[src$="project02.jpg"]  { view-transition-name: hero-project02; }
 .proj-img-container img[src$="project03.png"]  { view-transition-name: hero-project03; }
 
 @keyframes rise-in {

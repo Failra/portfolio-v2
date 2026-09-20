@@ -391,54 +391,6 @@ body {
     animation: fade-in 1s var(--ease-out) 1s both;
 }
 
-/* ***************************** */
-/* Scrolling keyword ticker      */
-/* ***************************** */
-
-.ticker {
-    overflow: hidden;
-    background: var(--color-primary-dark);
-    color: var(--color-accent);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    font-family: var(--font-mono);
-    font-size: 0.8em;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-}
-
-/* The keyword list is written twice in the HTML; sliding the track by  */
-/* exactly half its width makes the loop seamless.                       */
-.ticker-track {
-    display: flex;
-    width: max-content;
-    animation: ticker 38s linear infinite;
-}
-
-.ticker:hover .ticker-track {
-    animation-play-state: paused;
-}
-
-.ticker-track span {
-    padding: 14px 0;
-    white-space: nowrap;
-}
-
-/* Small orange diamond between keywords */
-.ticker-track span::after {
-    content: "";
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    margin: 0 28px;
-    vertical-align: middle;
-    background: var(--color-accent);
-    transform: rotate(45deg);
-    opacity: 0.8;
-}
-
 /* ************************************* */
 /* Style for the project listing section */
 /* ************************************* */
@@ -671,9 +623,9 @@ body {
 /* ---- detail page's hero image (project.css names them the same). ---- */
 .project-img[src$="activity01.png"] { view-transition-name: hero-activity01; }
 .project-img[src$="activity02.png"] { view-transition-name: hero-activity02; }
-.project-img[src$="activity03.png"] { view-transition-name: hero-activity03; }
-.project-img[src$="project01.png"]  { view-transition-name: hero-project01; }
-.project-img[src$="project02.png"]  { view-transition-name: hero-project02; }
+.project-img[src$="activity03.jpg"] { view-transition-name: hero-activity03; }
+.project-img[src$="project01.jpg"]  { view-transition-name: hero-project01; }
+.project-img[src$="project02.jpg"]  { view-transition-name: hero-project02; }
 .project-img[src$="project03.png"]  { view-transition-name: hero-project03; }
 
 /* ****************** */
@@ -719,11 +671,6 @@ body {
 @keyframes shimmer {
     from { background-position: 120% 0; }
     to   { background-position: -120% 0; }
-}
-
-@keyframes ticker {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
 }
 
 @keyframes grow-x {
@@ -792,7 +739,6 @@ body {
     .scroll-cue span,
     .eyebrow::before,
     .home-content h1 .accent,
-    .ticker-track,
     .project-card {
         animation: none;
     }
@@ -875,10 +821,6 @@ body {
 
     .scroll-cue {
         display: none;
-    }
-
-    .ticker {
-        font-size: 0.72em;
     }
 
     .portfolio {
