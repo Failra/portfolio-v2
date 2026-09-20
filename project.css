@@ -238,10 +238,11 @@ pre code, pre code {
     margin: 28px 0 0;
 }
 
+/* Photos keep their own proportions (height: auto) so that tall,        */
+/* portrait phone photos aren't cropped down to a thin horizontal strip. */
 .proj-gallery img {
     width: 100%;
-    height: 170px;
-    object-fit: cover;
+    height: auto;
     border-radius: var(--radius-sm);
     transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
 }
@@ -354,9 +355,5 @@ pre code, pre code {
 
     .proj-desc {
         margin-top: 36px;
-    }
-
-    .proj-gallery img {
-        height: 130px;
     }
 }
