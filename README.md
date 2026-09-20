@@ -226,6 +226,10 @@ worth skimming yourself too, so you can do it by hand if you ever need to.
 Other things you can ask for once the basics are in place:
 - *"Add a photo gallery to project04.html with these three images."*
 - *"Embed my YouTube video <link> on project04.html."*
+- *"Put my video at the top of project04.html instead of a picture."* —
+  this uses the video block's `.proj-video-hero` option, as on
+  `project03.html`, which puts the title under the video rather than on
+  top of it.
 - *"Change the site's accent color to blue"* — this only requires editing
   `theme.css`, since both stylesheets pull their colors from there.
 

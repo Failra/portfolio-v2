@@ -252,6 +252,19 @@ aspect ratio responsively.
 Do not download YouTube videos or store video files in this repository when an
 embed is appropriate.
 
+Add the `.proj-video-hero` modifier class alongside `.proj-video-container`
+when the video replaces the hero image at the top of a page, as on
+`project03.html`:
+
+```html
+<div class="proj-video-container proj-video-hero">
+```
+
+The video then takes the hero image's place, and the page title sits below it
+as a plain heading instead of overlapping it, so the title cannot cover the
+player's controls. A page using this should have no `.proj-img-container`, and
+gets no card-to-hero morph transition on `index.html`.
+
 ### New kinds of blocks
 
 If a future request genuinely requires a reusable content type that does not

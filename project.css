@@ -274,6 +274,25 @@ pre code, pre code {
     border: 0;
 }
 
+/* Modifier: add this alongside .proj-video-container when a video stands */
+/* in for the hero image at the top of a page. It takes the image's grid  */
+/* row, and the title then sits underneath as a plain heading rather than */
+/* overlapping, so the title plate can't cover the player's controls.     */
+.proj-video-container.proj-video-hero {
+    grid-row: 2;
+    margin: 0;
+    border-radius: var(--radius);
+}
+
+.proj-video-hero ~ h2.proj-header {
+    grid-row: 3;
+    align-self: start;
+    margin: 20px 0 0;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+}
+
 /* ---- Page-to-page morph: the hero image shares a name with its card ---- */
 /* ---- on the home page, so it flies between the two on navigation.    ---- */
 .proj-img-container img[src$="activity01.png"] { view-transition-name: hero-activity01; }
@@ -281,7 +300,6 @@ pre code, pre code {
 .proj-img-container img[src$="activity03.jpg"] { view-transition-name: hero-activity03; }
 .proj-img-container img[src$="project01.jpg"]  { view-transition-name: hero-project01; }
 .proj-img-container img[src$="project02.jpg"]  { view-transition-name: hero-project02; }
-.proj-img-container img[src$="project03.png"]  { view-transition-name: hero-project03; }
 
 @keyframes rise-in {
     from { opacity: 0; transform: translateY(24px); }
