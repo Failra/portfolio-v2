@@ -300,6 +300,7 @@ pre code, pre code {
 .proj-img-container img[src$="activity03.jpg"] { view-transition-name: hero-activity03; }
 .proj-img-container img[src$="project01.jpg"]  { view-transition-name: hero-project01; }
 .proj-img-container img[src$="project02.jpg"]  { view-transition-name: hero-project02; }
+.proj-img-container img[src$="project06.svg"] { view-transition-name: hero-project06; }
 
 @keyframes rise-in {
     from { opacity: 0; transform: translateY(24px); }
