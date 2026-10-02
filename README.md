@@ -230,6 +230,9 @@ Other things you can ask for once the basics are in place:
   this uses the video block's `.proj-video-hero` option, as on
   `project03.html`, which puts the title under the video rather than on
   top of it.
+- *"My video is a vertical YouTube Short."* — this uses the video
+  block's `.proj-video-vertical` option, as on `project06.html`, which
+  shows it in a tall frame instead of a wide one.
 - *"Change the site's accent color to blue"* — this only requires editing
   `theme.css`, since both stylesheets pull their colors from there.
 

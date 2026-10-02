@@ -265,6 +265,17 @@ as a plain heading instead of overlapping it, so the title cannot cover the
 player's controls. A page using this should have no `.proj-img-container`, and
 gets no card-to-hero morph transition on `index.html`.
 
+Add the `.proj-video-vertical` modifier instead when the video is a vertical
+phone video, such as a YouTube Short, as on `project06.html`:
+
+```html
+<div class="proj-video-container proj-video-vertical">
+```
+
+The frame then keeps a tall 9:16 shape and sits centered below the
+description, rather than showing the video as a narrow strip with wide black
+bars.
+
 ### New kinds of blocks
 
 If a future request genuinely requires a reusable content type that does not

@@ -626,7 +626,7 @@ body {
 .project-img[src$="activity03.jpg"] { view-transition-name: hero-activity03; }
 .project-img[src$="project01.jpg"]  { view-transition-name: hero-project01; }
 .project-img[src$="project02.jpg"]  { view-transition-name: hero-project02; }
-.project-img[src$="project06.svg"]  { view-transition-name: hero-project06; }
+.project-img[src$="project06.jpg"]  { view-transition-name: hero-project06; }
 
 /* ****************** */
 /* Footer             */

@@ -293,6 +293,16 @@ pre code, pre code {
     box-shadow: none;
 }
 
+/* Modifier: add this alongside .proj-video-container for a vertical    */
+/* phone video (e.g. a YouTube Short). It keeps a tall 9:16 shape and   */
+/* sits centered, instead of a narrow strip inside a wide 16:9 frame.   */
+.proj-video-container.proj-video-vertical {
+    justify-self: center;
+    width: min(100%, 360px);
+    padding-top: 0;
+    aspect-ratio: 9 / 16;
+}
+
 /* ---- Page-to-page morph: the hero image shares a name with its card ---- */
 /* ---- on the home page, so it flies between the two on navigation.    ---- */
 .proj-img-container img[src$="activity01.png"] { view-transition-name: hero-activity01; }
@@ -300,7 +310,7 @@ pre code, pre code {
 .proj-img-container img[src$="activity03.jpg"] { view-transition-name: hero-activity03; }
 .proj-img-container img[src$="project01.jpg"]  { view-transition-name: hero-project01; }
 .proj-img-container img[src$="project02.jpg"]  { view-transition-name: hero-project02; }
-.proj-img-container img[src$="project06.svg"] { view-transition-name: hero-project06; }
+.proj-img-container img[src$="project06.jpg"]  { view-transition-name: hero-project06; }
 
 @keyframes rise-in {
     from { opacity: 0; transform: translateY(24px); }
