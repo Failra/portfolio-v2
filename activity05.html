@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Activity 5: Programming with Sensors</title>
+    <link rel="stylesheet" href="./project.css">
+</head>
+<body>
+
+    <!-- Header and Navigation Section -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="./index.html" class="active">Home</a>
+        </nav>
+    </header>
+
+    <!-- Project Information -->
+    <div class="proj-container">
+
+        <h1 class='proj-header'>Project Portfolio</h1>
+
+        <div class="proj-img-container">
+            <img src="./images/activity05.jpg" alt="Hand holding the LEGO drill from Project 8 just above a table, with its magenta and yellow head close to the surface">
+        </div>
+
+        <h2 class='proj-header'>Activity 5: Programming with Sensors</h2>
+
+        <div class="proj-desc">
+            <p>In this in-class activity we brainstormed different kinds of inputs for our robots. Project 8: Astronaut Tools needs inputs to control its motors (the output), so the task was to use AI to help write code that reads one input and uses it to control a motor, then test the code and document it.</p>
+
+            <p>I used the Distance Sensor and attached it to my Project 8 drill for the demonstration. The medium motor that spins the drill is on port A, and the Distance Sensor is on port C, aimed down at the surface below. The closer the drill gets, the slower it spins.</p>
+
+            <p>The program checks the distance, sets the motor speed, waits 50 milliseconds, and repeats. Two distance thresholds pick one of three speeds: 1000 degrees per second when the surface is more than 200 mm away, 500 between 100 and 200 mm, and 200 at 100 mm or closer. If the sensor doesn't get a valid reading it returns -1, and the program stops the motor. So the input controls both the motor's speed and whether it is on or off, while the direction stays the same. The video below shows the drill speeding up and slowing down as I move it away from and toward the table.</p>
+        </div>
+
+        <div class="proj-video-container">
+            <iframe src="https://www.youtube.com/embed/FlXPu-WGzWM" title="LEGO drill with a distance sensor changing speed as it moves toward and away from a table" allowfullscreen></iframe>
+        </div>
+
+        <div class="proj-code">
+            <h3>Code:</h3>
+<pre><code># Setup: medium motor on port A and Distance Sensor on port C,
+# aimed at the ground.
+from hub import port
+import runloop
+import motor
+import distance_sensor
+
+SLOW_SPEED = 200          # Motor speed when the ground is close.
+MEDIUM_SPEED = 500        # Motor speed at a medium distance.
+FAST_SPEED = 1000         # Motor speed when the ground is farther away.
+SLOW_DISTANCE_MM = 100    # Distance threshold for slow speed.
+MEDIUM_DISTANCE_MM = 200  # Distance threshold for medium speed.
+
+async def main():
+    # Keep checking the distance and adjusting the motor.
+    while True:
+        ground_distance = distance_sensor.distance(port.C)
+
+        # Stop if the sensor does not have a valid distance reading.
+        if ground_distance == -1:
+            motor.stop(port.A)
+
+        # Use slower speeds when the ground is closer.
+        elif ground_distance &lt;= SLOW_DISTANCE_MM:
+            motor.run(port.A, SLOW_SPEED)
+        elif ground_distance &lt;= MEDIUM_DISTANCE_MM:
+            motor.run(port.A, MEDIUM_SPEED)
+        else:
+            motor.run(port.A, FAST_SPEED)
+
+        # Pause briefly before checking the distance again.
+        await runloop.sleep_ms(50)
+
+runloop.run(main())</code></pre>
+        </div>
+
+    </div>
+    <!-- End Project Information -->
+
+</body>
+</html>
