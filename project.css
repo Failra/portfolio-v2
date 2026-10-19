@@ -314,6 +314,7 @@ pre code, pre code {
 .proj-img-container img[src$="project06.jpg"]  { view-transition-name: hero-project06; }
 .proj-img-container img[src$="project07.jpg"]  { view-transition-name: hero-project07; }
 .proj-img-container img[src$="project08.jpg"]  { view-transition-name: hero-project08; }
+.proj-img-container img[src$="project09.jpg"]  { view-transition-name: hero-project09; }
 
 @keyframes rise-in {
     from { opacity: 0; transform: translateY(24px); }
