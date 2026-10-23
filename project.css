@@ -309,6 +309,7 @@ pre code, pre code {
 .proj-img-container img[src$="activity02.png"] { view-transition-name: hero-activity02; }
 .proj-img-container img[src$="activity03.jpg"] { view-transition-name: hero-activity03; }
 .proj-img-container img[src$="activity05.jpg"] { view-transition-name: hero-activity05; }
+.proj-img-container img[src$="activity06.jpg"] { view-transition-name: hero-activity06; }
 .proj-img-container img[src$="project01.jpg"]  { view-transition-name: hero-project01; }
 .proj-img-container img[src$="project02.jpg"]  { view-transition-name: hero-project02; }
 .proj-img-container img[src$="project06.jpg"]  { view-transition-name: hero-project06; }

@@ -625,6 +625,7 @@ body {
 .project-img[src$="activity02.png"] { view-transition-name: hero-activity02; }
 .project-img[src$="activity03.jpg"] { view-transition-name: hero-activity03; }
 .project-img[src$="activity05.jpg"] { view-transition-name: hero-activity05; }
+.project-img[src$="activity06.jpg"] { view-transition-name: hero-activity06; }
 .project-img[src$="project01.jpg"]  { view-transition-name: hero-project01; }
 .project-img[src$="project02.jpg"]  { view-transition-name: hero-project02; }
 .project-img[src$="project06.jpg"]  { view-transition-name: hero-project06; }
